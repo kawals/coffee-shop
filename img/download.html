@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="lambo_configurator_html">
+  <head>
+
+    <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKLP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript -->
+<!-- Hotjar Tracking Code for http://configurator.lamborghini.com/configurator/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:819460,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+    <base contextPath="" href="/configurator">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lamborghini Car Configurator</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Roboto:400,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.8f2eb359f8255c2a40e8.css"></head>
+  <body class="lambo_configurator hover-activated">
+
+    <!-- Google Tag Manager -->
+     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+     })(window,document,'script','dataLayer','GTM-KKLP');</script>
+     <!-- End Google Tag Manager --> <script>window.addEventListener('tracking-api-ready', handleTracking);
+
+function handleTracking(event) {
+  console.log('[TRACKING-IMPL] starting to track...');
+
+  var trackingData = {
+    'pageCategory': 'configurator',
+    'pageLanguage': event.detail.locale
+  };
+  console.log('[TRACKING-IMPL] dataLayer.push', trackingData);
+  dataLayer.push(trackingData);
+
+  var trackingService = lamborghini.configurator.tracking.service;
+
+  var trackingContext = trackingService.getTrackingContext('gtmDealer');
+
+  var EVENTS = ['FOOTER_MENU', 'CTA_BUTTON_CLICK', 'SUMMARY_PAGE_ENTER'];
+
+  var FOOTER_EVENT_TYPES = ['environments', 'animations', 'render_mode'];
+
+  trackingContext.registerAll(EVENTS, function (data) {
+    var staticData = data.staticData;
+    var eventData = data.eventData;
+
+    if (staticData.general.mode !== 'dealer') {
+      return;
+    }
+
+    if (eventData.eventType === 'FOOTER_MENU') {
+      trackFooterMenu(eventData.data);
+    } else if (eventData.eventType === 'CTA_BUTTON_CLICK') {
+      trackSendToLoom(eventData.data);
+    } else if (eventData.eventType === 'SUMMARY_PAGE_ENTER') {
+      trackSummaryPageEnter(staticData.configuration);
+    }
+  });
+
+  function trackSendToLoom(data) {
+    if (data.type !== 'send_to_loom') {
+      return;
+    }
+
+    var trackingData = {
+      'event': 'configurator',
+      'eventCategory': 'configurator',
+      'eventAction': 'invio loom',
+      'success': (!!data.success) + ''
+    };
+    console.log('[TRACKING-IMPL] dataLayer.push', trackingData);
+    dataLayer.push(trackingData);
+  }
+
+  function trackSummaryPageEnter(configurationData) {
+    var trackingData = {
+      'event': 'configurator',
+      'eventCategory': 'configurator',
+      'eventAction': 'finish',
+      'modelCar': {
+        'code': configurationData.model.code,
+        'year': configurationData.model.year,
+        'handbook': configurationData.model.handbook,
+        'text': configurationData.model.text
+      },
+      'modelPaint': {
+        'code': configurationData.exteriorColor.key,
+        'text': configurationData.exteriorColor.text
+      },
+      'configCode': configurationData.ccCode
+    };
+    console.log('[TRACKING-IMPL] dataLayer.push', trackingData);
+    dataLayer.push(trackingData);
+  }
+
+  function trackFooterMenu(data) {
+    if (FOOTER_EVENT_TYPES.indexOf(data.type) === -1) {
+      return;
+    }
+
+    var trackingType = footerMenuTypeToEventActionKey(data.type);
+    if (!trackingType) {
+      return;
+    }
+
+    var trackingData = {
+      'event': 'configurator',
+      'eventCategory': 'configurator',
+      'eventAction': trackingType
+    };
+    console.log('[TRACKING-IMPL] dataLayer.push', trackingData);
+    dataLayer.push(trackingData);
+  }
+
+  function footerMenuTypeToEventActionKey(type) {
+    if (!type) {
+      return;
+    }
+
+    switch (type) {
+      case 'environments':
+        return 'scenario';
+      case 'render_mode':
+        return '3d mode';
+      case 'animations':
+        return 'animation';
+      default:
+        return null;
+    }
+  }
+}</script>
+
+    <script>
+      try {
+        var globalCcDefaultSettings = {"defaultDataStructureState":"LIVE","defaultContextKey":"lcc","defaultClientKey":"default"};
+        var zlBoltSettings = {"customer":"lamborghini","scriptEnvironment":"live","connectionEnvironment":"live","protocol":"https","destinationUrlPattern":"https://libzl.zlthunder.net/v3/lamb/[env]/libzl.js"};
+      } catch (ignored) {
+        //ignored
+      }
+    </script>
+
+    <app-root></app-root>
+
+    <div class="masking-wrapper opaque loading">
+      <div class="masking-logo"></div>
+    </div>
+
+  <script type="text/javascript" src="/runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="/polyfills.df2b6da7b96747c63e72.js"></script><script type="text/javascript" src="/scripts.5df5acbc4c3ebafd3dc5.js"></script><script type="text/javascript" src="/main.d62c278dff70529a15a8.js"></script></body>
+</html>
